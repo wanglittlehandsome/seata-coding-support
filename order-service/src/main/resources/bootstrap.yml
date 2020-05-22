@@ -1,0 +1,62 @@
+server:
+  port: 16001 # 端口
+spring:
+  application:
+    name: order-service
+  datasource:
+    druid:
+      url: jdbc:mysql://192.168.31.219:3306/seata_order?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: abk
+      password: qwe123!@#
+  cloud:
+    # Nacos 作为注册中心的配置项
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+# Seata 配置项，对应 SeataProperties 类
+seata:
+  application-id: ${spring.application.name} # Seata 应用编号，默认为 ${spring.application.name}
+  tx-service-group: ${spring.application.name}-group # Seata 事务组编号，用于 TC 集群名
+  # Seata 服务配置项，对应 ServiceProperties 类
+  service:
+    # 虚拟组和分组的映射
+    vgroup_mapping:
+      order-service-group: default
+  # Seata 注册中心配置项，对应 RegistryProperties 类
+  registry:
+    type: nacos # 注册中心类型，默认为 file
+    nacos:
+      cluster: default # 使用的 Seata 分组
+      namespace: # Nacos 命名空间
+      serverAddr: localhost # Nacos 服务地址
+
+#mybatis
+mybatis-plus:
+  config-location: classpath:/xml/mybatis-config.xml
+  mapper-locations: classpath*:/xml/mapper/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.anbangke.orderservice.entity
+  global-config:
+    refresh: true
+    banner: false
+    # 数据库相关配置
+    db-config:
+      #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+      id-type: id_worker
+      #字段策略 IGNORED:"忽略判断",NOT_NULL:"非 NULL 判断"),NOT_EMPTY:"非空判断"
+      field-strategy: NOT_NULL
+      #驼峰下划线转换
+      column-underline: true
+      #数据库大写下划线转换
+      #capital-mode: true
+      #逻辑删除配置
+      logic-delete-field: deleted #逻辑删除字段
+      logic-delete-value: 1 #默认值1
+      logic-not-delete-value: 0 #默认值0
+      refresh-mapper: true
+logging:
+  level:
+    default: debug
+    root: warn
