@@ -1,16 +1,18 @@
-package com.anbangke.gateway;
+package com.anbangke.userserver;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.anbangke"})
 @EnableDiscoveryClient
-public class GatewayApplication implements CommandLineRunner {
+@EnableFeignClients
+public class UserServerApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
-        SpringApplication.run(GatewayApplication.class, args);
+        SpringApplication.run(UserServerApplication.class, args);
     }
 
     @Override

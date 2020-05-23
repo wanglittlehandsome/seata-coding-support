@@ -16,6 +16,7 @@
         <spring.boot.version>2.2.5.RELEASE</spring.boot.version>
         <io.seata.version>1.2.0</io.seata.version>
         <mysql-support.version>4.0.0-SNAPSHOT</mysql-support.version>
+        <wy-response.version>4.0.0-SNAPSHOT</wy-response.version>
         <lombok.version>1.18.8</lombok.version>
     </properties>
 
@@ -24,6 +25,8 @@
         <module>order-service</module>
         <module>account-service</module>
         <module>product-service</module>
+        <module>user-server</module>
+        <module>wy-response</module>
         <module>gateway</module>
     </modules>
 
