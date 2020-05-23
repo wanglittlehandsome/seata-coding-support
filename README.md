@@ -2,9 +2,9 @@
 
 > version说明:
 
-spring boot | spring cloud | spring cloud alibaba | seata | nacos
-:-: | :-: | :-: | :-:
-2.2.5.RELEASE | Hoxton.SR4 | 2.2.0.RELEASE | 1.2.0 | 1.2.1
+| spring boot | spring cloud | spring cloud alibaba | seata | nacos |
+| ----- | ----- | ----- | ----- |
+| 2.2.5.RELEASE | Hoxton.SR4 | 2.2.0.RELEASE | 1.2.0 | 1.2.1 |
 
 [TOCM]
 
