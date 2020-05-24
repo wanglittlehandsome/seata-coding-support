@@ -1,7 +1,9 @@
 package com.anbangke.gateway.filter;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.core.Ordered;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -12,7 +14,10 @@ import reactor.core.publisher.Mono;
  * @email 784665813@qq.com
  */
 @Component
-public class PostGatewayFilterFactory extends AbstractGatewayFilterFactory<PostGatewayFilterFactory.Config> {
+@Slf4j
+public class PostGatewayFilterFactory extends AbstractGatewayFilterFactory<PostGatewayFilterFactory.Config> implements Ordered {
+
+    private static final String REQUEST_START_TIME = "request_start_time";
 
     public PostGatewayFilterFactory() {
         super(Config.class);
@@ -21,12 +26,17 @@ public class PostGatewayFilterFactory extends AbstractGatewayFilterFactory<PostG
     @Override
     public GatewayFilter apply(Config config) {
         // grab configuration from Config object
-        return (exchange, chain) -> {
-            return chain.filter(exchange).then(Mono.fromRunnable(() -> {
-                ServerHttpResponse response = exchange.getResponse();
-                //Manipulate the response in some way
-            }));
-        };
+        return (exchange, chain) -> chain.filter(exchange).then(Mono.fromRunnable(() -> {
+            Long startTime = exchange.getAttribute(REQUEST_START_TIME);
+            if (startTime != null) {
+                log.info("请求地址：{},消耗时间：{}ms", exchange.getRequest().getURI(), System.currentTimeMillis() - startTime);
+            }
+        }));
+    }
+
+    @Override
+    public int getOrder() {
+        return 0;
     }
 
     public static class Config {

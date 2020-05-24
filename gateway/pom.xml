@@ -18,6 +18,17 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.anbangke</groupId>
+            <artifactId>wy-response</artifactId>
+            <version>${wy-response.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
