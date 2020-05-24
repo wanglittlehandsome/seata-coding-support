@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: user-server
+  main:
+    allow-bean-definition-overriding: true
   datasource:
     druid:
       url: jdbc:mysql://139.196.107.41:3306/abk?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true&useOldAliasMetadataBehavior=true
