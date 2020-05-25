@@ -73,7 +73,6 @@ public class ClassPathAuthScanner extends ClassPathBeanDefinitionScanner {
         for (BeanDefinitionHolder holder : beanDefinitions) {
             definition = (GenericBeanDefinition) holder.getBeanDefinition();
             String beanClassName = definition.getBeanClassName();
-            log.info("获取到beanClassName: {}", beanClassName);
             AuthBean.beanNameList.add(beanClassName);
         }
     }
@@ -103,5 +102,6 @@ public class ClassPathAuthScanner extends ClassPathBeanDefinitionScanner {
     static class AuthBean {
 
         public static List<String> beanNameList = new ArrayList<>();
+
     }
 }

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user/server")
 public class UserServerController {
 
-    @Auth(mapping = "getUser")
+    @Auth(mapping = "/getUser")
     @GetMapping("/getUser")
     public Response getUser(Long id) {
         if (StringUtils.isEmpty(id)) {

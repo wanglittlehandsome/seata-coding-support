@@ -22,12 +22,11 @@ import java.util.Map;
  */
 @Slf4j
 @Component
-@Order(0)
 public class AuthHandle implements ApplicationContextAware, InitializingBean {
 
     private ApplicationContext applicationContext;
 
-    public static List<String> allAuth = new ArrayList<>();
+    private static List<String> allAuth = new ArrayList<>();
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -36,10 +35,22 @@ public class AuthHandle implements ApplicationContextAware, InitializingBean {
         scanAuthBean();
     }
 
+
+
+    /**
+     * 扫描指定类，并自动加载
+     * @date: 2020/5/25 17:40
+     */
     private void scanAuthBean() {
         if (!ClassPathAuthScanner.AuthBean.beanNameList.isEmpty()) {
             ClassPathAuthScanner.AuthBean.beanNameList.forEach(beanName -> {
-                Object clazz = applicationContext.getBean(beanName);
+                Class<?> beanClass = null;
+                try {
+                    beanClass = Class.forName(beanName);
+                } catch (ClassNotFoundException e) {
+                    log.error("ClassNotFoundException:", e);
+                }
+                Object clazz = applicationContext.getBean(beanClass);
                 for (Method method : clazz.getClass().getDeclaredMethods()) {
                     Auth auth = method.getAnnotation(Auth.class);
                     if (auth != null) {
@@ -52,7 +63,6 @@ public class AuthHandle implements ApplicationContextAware, InitializingBean {
 
     private void scanAuthClass() {
         Map<String, Object> clazzMap = applicationContext.getBeansWithAnnotation(Auth.class);
-        System.out.println("this is clazzMap" + clazzMap.toString());
         clazzMap.values().forEach(obj -> {
             final Class<? extends Object> clazz = obj.getClass();
             Auth auth = clazz.getAnnotation(Auth.class);
@@ -64,7 +74,6 @@ public class AuthHandle implements ApplicationContextAware, InitializingBean {
 
     private void scanAuthMethod() {
         Map<String, Object> clazzMap = applicationContext.getBeansWithAnnotation(Auth.class);
-        System.out.println("this is clazzMap" + clazzMap.toString());
         clazzMap.values().forEach(obj -> {
             final Class<? extends Object> clazz = obj.getClass();
             for (Method method : clazz.getDeclaredMethods()) {
@@ -79,6 +88,14 @@ public class AuthHandle implements ApplicationContextAware, InitializingBean {
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
+    }
+
+    public ApplicationContext getApplicationContext() {
+        return this.applicationContext;
+    }
+
+    public List<String> getAllAuth() {
+        return allAuth;
     }
 
 }
