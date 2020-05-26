@@ -28,6 +28,7 @@
         <module>user-server</module>
         <module>wy-response</module>
         <module>gateway</module>
+        <module>wy-design-server</module>
     </modules>
 
     <dependencies>

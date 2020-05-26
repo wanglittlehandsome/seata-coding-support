@@ -1,6 +1,7 @@
 package com.anbangke.userserver;
 
 import com.anbangke.userserver.anno.EnableAuth;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
